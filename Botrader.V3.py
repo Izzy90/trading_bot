@@ -9,7 +9,8 @@ import os
 MA = 21
 TRADE_QUANTITY = 0.12
 TRADE_SYMBOL = "BNBBUSD"
-SOCKET = "wss://stream.binance.com:9443/ws/bnbbusd@kline_1m"
+CANDLE_SIZE = "1m"
+SOCKET = f"wss://stream.binance.com:9443/ws/bnbbusd@kline_{CANDLE_SIZE}"
 ORDER_TYPE_MARKET = 'MARKET'
 BUFFER = 0.0005
 BUDGET = 0
@@ -108,9 +109,9 @@ def on_message(ws, message):
     time = datetime.datetime.now()
     # print (time.strftime("%Y-%m-%d %H:%M:%S"))
     #   print(message)
-    #   pprint.pprint(json_message)
 
     json_message = json.loads(message)
+    # pprint.pprint(json_message)
 
     # print("  There we Go!!    COIN:   %s  MA=   %s     BUFFER=    %s" % (TRADE_SYMBOL, _ma, _buffer  ))
 
@@ -163,7 +164,7 @@ def on_message(ws, message):
                 logfile.write(str(time))
                 logfile.write("  buy    price:  %s" % last_price)
                 logfile.write("\n")
-                logifle.close()
+                logfile.close()
         elif (last_budget == 0):
             if last_price < (current_sell_limit):
                 # 2
