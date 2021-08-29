@@ -4,6 +4,14 @@ import dateparser
 from binance.client import Client
 import binance
 
+
+'''
+This function will generate a 
+'''
+def get_historical_data(client: binance.client.Client, symbol: str, frequency: str, start_date: str, end_date: str):
+	return
+
+
 client = Client(config.API_KEY, config.API_SECRET)
 
 #prices = client.get_all_tickers()
@@ -43,7 +51,7 @@ candlesticks = client.get_historical_klines("BNBBUSD", Client.KLINE_INTERVAL_1MI
 
 
 for candlestick in candlesticks:
-	candlestick[0] = candlestick[0] / 1000
+	candlestick[0] = int(candlestick[0] / 1000)
 	candlestick_writer.writerow(candlestick)
 	txtfile.write(str(candlestick))
 	txtfile.write("\n")

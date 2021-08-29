@@ -1,2 +1,4 @@
 config.py
 logfile*
+*.csv
+*.txt

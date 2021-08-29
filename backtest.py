@@ -1,51 +1,28 @@
 import backtrader as bt
-import talib
+from typing import Type
+import strategies
 
 
-class RSIStrategy(bt.Strategy):
+class BackTest:
+    strategy = None
+    data_file_path = ''
 
-    def __init__(self):
-        self.rsi = talib.RSI(self.data, period=14)
+    def __init__(self, strategy: Type[bt.Strategy], data_file_path: str):
+        self.strategy = strategy
+        self.data_file_path = data_file_path
 
-    # size = amount of coin to buy (etc. BTC)
-    def next(self):
-        if self.rsi < 30 and not self.position:
-            self.buy(size=0.0000001)
-        if self.rsi > 70 and self.position:
-            self.close()
-
-
-class SmaCross(bt.Strategy):
-    # list of parameters which are configurable for the strategy
-    params = dict(
-        pfast=1,  # period for the fast moving average
-        pslow=270  # period for the slow moving average
-    )
-
-    def __init__(self):
-        sma1 = bt.ind.SMA(period=self.p.pfast)  # fast moving average
-        sma2 = bt.ind.SMA(period=self.p.pslow)  # slow moving average
-        self.crossover = bt.ind.CrossOver(sma1, sma2)  # crossover signal
-
-    def next(self):
-        if not self.position:  # not in the market
-            if self.crossover > 0:  # if fast crosses slow to the upside
-                self.buy(size=5.4)  # enter long
+    def run_backtest(self):
+        cerebro = bt.Cerebro()
+        data = bt.feeds.GenericCSVData(dataname=self.data_file_path, dtformat=2)
+        cerebro.adddata(data)
+        cerebro.addstrategy(self.strategy)
+        cerebro.run()
+        cerebro.plot()
+        # TODO - save backtest results (to some pandas df) and return it?
 
 
-
-        elif self.crossover < 0:  # in the market & cross to the downside
-            self.close()  # close long position
-
-
-cerebro = bt.Cerebro()
-
-data = bt.feeds.GenericCSVData(dataname='BNB_MIN.csv', dtformat=2)
-
-cerebro.adddata(data)
-
-cerebro.addstrategy(SmaCross)
-
-cerebro.run()
-
-cerebro.plot()
+if __name__ == '__main__':
+    data_file_path = 'BNB_MIN.csv'
+    strategy = strategies.SmaCross
+    my_backtest = BackTest(strategy=strategy, data_file_path=data_file_path)
+    my_backtest.run_backtest()
