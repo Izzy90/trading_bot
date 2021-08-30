@@ -5,9 +5,7 @@ from binance.client import Client
 import binance
 
 
-'''
-This function will generate a 
-'''
+# TODO - This function will generate a csv dataset of a chosen symbol, in a given frequency, for a chosen time period.
 def get_historical_data(client: binance.client.Client, symbol: str, frequency: str, start_date: str, end_date: str):
 	return
 
