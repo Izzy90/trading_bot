@@ -16,7 +16,10 @@ class BackTest:
         data = bt.feeds.GenericCSVData(dataname=self.data_file_path, dtformat=2)
         cerebro.adddata(data)
         cerebro.addstrategy(self.strategy)
-        cerebro.run()
+        cerebro.run(
+            # Un-comment to disable default observers
+            stdstats=False
+        )
         cerebro.plot()
         # TODO - save backtest results (to some pandas df) and return it?
 
