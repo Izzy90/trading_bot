@@ -16,6 +16,9 @@ class BackTest:
         data = bt.feeds.GenericCSVData(dataname=self.data_file_path, dtformat=2)
         cerebro.adddata(data)
         cerebro.addstrategy(self.strategy)
+        cerebro.addobserver(bt.observers.Broker)
+        cerebro.addobserver(bt.observers.Trades)
+        cerebro.addobserver(bt.observers.BuySell)
         cerebro.run(
             # Un-comment to disable default observers
             stdstats=False
@@ -25,7 +28,7 @@ class BackTest:
 
 
 if __name__ == '__main__':
-    data_file_path = 'BNB_MIN.csv'
+    data_file_path = 'BNBBUSD_5m.csv'
     strategy = strategies.SmaCross
     my_backtest = BackTest(strategy=strategy, data_file_path=data_file_path)
     my_backtest.run_backtest()
