@@ -10,19 +10,15 @@ data_path = 'data'
 
 # TODO - This function will generate a csv dataset of a chosen symbol, in a chosen frequency, for a chosen time period.
 # Dates format should be "1 July, 2021"
-def get_historical_data(client: binance.client.Client, symbol: str, interval: str, start_date: str, end_date: str):
+def get_historical_data(client: binance.client.Client, symbol: str, interval: str, start_date: str, end_date: str,
+                        folder: str):
 
     # TODO - create a separate folder for all the data CSVs
     # Path("/data").mkdir(parents=True, exist_ok=True)
 
-    csv_filename = f'{symbol}_{interval}_{start_date}-{end_date}.csv'
+    csv_filename = f'{folder}/{symbol}_{interval}_{start_date}-{end_date}.csv'
     csvfile = open(csv_filename, 'w', newline='')
     candlestick_writer = csv.writer(csvfile, delimiter=',')
-
-    # start = binance.helpers.date_to_milliseconds(str(dateparser.parse('270 min ago UTC')))
-    # end = binance.helpers.date_to_milliseconds(str(dateparser.parse('now')))
-    # print(start)
-    # print(end)
 
     candlesticks = client.get_historical_klines(symbol, interval, start_date, end_date)
 

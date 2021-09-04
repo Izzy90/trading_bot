@@ -2,3 +2,6 @@ config.py
 logfile*
 *.csv
 textfile.txt
+data
+*.wav
+*.png

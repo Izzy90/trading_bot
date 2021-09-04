@@ -1,21 +1,25 @@
 import backtrader as bt
 from typing import Type
 import strategies
+import os
+from backtest_parameters import *
 
 
 class BackTest:
     strategy = None
     data_file_path = ''
 
+    # TODO: add commissions
+
     def __init__(self, strategy: Type[bt.Strategy], data_file_path: str):
         self.strategy = strategy
         self.data_file_path = data_file_path
 
-    def run_backtest(self):
+    def run_backtest(self, **kwargs):
         cerebro = bt.Cerebro()
         data = bt.feeds.GenericCSVData(dataname=self.data_file_path, dtformat=2)
         cerebro.adddata(data)
-        cerebro.addstrategy(self.strategy)
+        cerebro.addstrategy(self.strategy, kwargs['window_size'] if self.strategy == strategies.SmaCross else None)
         cerebro.addobserver(bt.observers.Broker)
         cerebro.addobserver(bt.observers.Trades)
         cerebro.addobserver(bt.observers.BuySell)
@@ -23,12 +27,17 @@ class BackTest:
             # Un-comment to disable default observers
             stdstats=False
         )
-        cerebro.plot()
+        if not os.path.exists(plots_folder_name):
+            os.makedirs(plots_folder_name)
         # TODO - save backtest results (to some pandas df) and return it?
+        strat_name = f'{self.strategy}'.split('.')[1].split("'")[0]
+        cerebro.plot(savefig=True,
+                     path=f'{plots_folder_name}/{kwargs["window_size"] if self.strategy == strategies.SmaCross else ""}_{strat_name}'
+                     )
 
 
 if __name__ == '__main__':
-    data_file_path = 'BNBBUSD_5m.csv'
+    data_file_path = 'data/BNBBUSD_5m.csv'
     strategy = strategies.SmaCross
     my_backtest = BackTest(strategy=strategy, data_file_path=data_file_path)
     my_backtest.run_backtest()
