@@ -13,29 +13,35 @@ class RSIStrategy(bt.Strategy):
     # size = amount of coin to buy (etc. BTC)
     def next(self):
         if self.rsi < 30 and not self.position:
-            self.buy(size=0.0000001)
+            self.buy(size=54)
         if self.rsi > 70 and self.position:
             self.close()
 
 
 class SmaCross(bt.Strategy):
     # list of parameters which are configurable for the strategy
-    # TODO: enable dynamic value for pslow AM window size as a parameter
+    # TODO: enable dynamic value for pslow MA window size as a parameter
     params = dict(
         pfast=1,  # period for the fast moving average
         pslow=270  # period for the slow moving average
     )
 
-    def __init__(self, window_size):
+    def __init__(self, window_size, client):
         sma1 = bt.ind.SMA(period=self.p.pfast)  # fast moving average
         sma2 = bt.ind.SMA(period=window_size)  # slow moving average
         self.crossover = bt.ind.CrossOver(sma1, sma2)  # crossover signal
 
     def next(self):
+
+        print(self.datetime.datetime())
+
         if not self.position:  # not in the market
             if self.crossover > 0:  # if fast crosses slow to the upside
-                # TODO: Ask Dean about this magic number
-                self.buy(size=5.4)  # enter long
+                # TODO: The size is the number of coins to buy. Need to find a way to change this value with the total
+                # amount of coin in the account
+                amount = 2
+
+                self.buy(size=amount)  # enter long
 
         elif self.crossover < 0:  # in the market & cross to the downside
             self.close()  # close long position

@@ -17,12 +17,25 @@ class BackTest:
 
     def run_backtest(self, **kwargs):
         cerebro = bt.Cerebro()
-        data = bt.feeds.GenericCSVData(dataname=self.data_file_path, dtformat=2)
+        # TODO: Alter the timeframe parameter to be dynamic - when interval is in minutes, be minutes, etc.
+        data = bt.feeds.GenericCSVData(
+            dataname=self.data_file_path,
+            openinterest=-1,
+            timeframe=bt.TimeFrame.Minutes,
+            dtformat=2
+        )
+
         cerebro.adddata(data)
-        cerebro.addstrategy(self.strategy, kwargs['window_size'] if self.strategy == strategies.SmaCross else None)
+        if self.strategy == strategies.SmaCross:
+            cerebro.addstrategy(self.strategy, kwargs['window_size'], kwargs['client'])
+        else:
+            cerebro.addstrategy(self.strategy)
         cerebro.addobserver(bt.observers.Broker)
         cerebro.addobserver(bt.observers.Trades)
         cerebro.addobserver(bt.observers.BuySell)
+        cerebro.addwriter(bt.WriterFile, out='OUTPUT_FILE_PATH.txt')
+        cerebro.addanalyzer(bt.analyzers.PyFolio, _name='pyfolio.txt')
+        cerebro.broker.setcommission(commission=trade_commission_percentage)
         cerebro.run(
             # Un-comment to disable default observers
             stdstats=False

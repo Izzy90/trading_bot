@@ -35,8 +35,10 @@ def main():
                     # Backtest it
                     my_backtest = BackTest(strategy=strategy, data_file_path=data_filename)
                     # todo: add results to results df
-                    # TODO: fix bug here:
-                    my_backtest.run_backtest(window_size=270)
+
+                    # TODO: time each iteration, progress bar of configurations?
+
+                    my_backtest.run_backtest(client=client, window_size=270)
 
     # todo: analyze results df to show how the strategy performs
 

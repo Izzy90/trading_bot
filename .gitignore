@@ -3,5 +3,6 @@ logfile*
 *.csv
 textfile.txt
 data
+plots
 *.wav
 *.png
