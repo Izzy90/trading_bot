@@ -1,7 +1,6 @@
 config.py
 logfile*
 *.csv
-textfile.txt
 data
 plots
 *.wav

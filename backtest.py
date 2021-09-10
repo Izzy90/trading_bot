@@ -6,10 +6,9 @@ from backtest_parameters import *
 
 
 class BackTest:
+
     strategy = None
     data_file_path = ''
-
-    # TODO: add commissions
 
     def __init__(self, strategy: Type[bt.Strategy], data_file_path: str):
         self.strategy = strategy

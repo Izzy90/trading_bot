@@ -4,7 +4,7 @@ import strategies
 symbols = ['BNBBUSD', 'BTCBUSD']
 # Params: intervals, test periods
 intervals = [
-    '5m',
+    # '5m',
     '1m'
 ]
 periods = [

@@ -2,7 +2,6 @@ import pandas as pd
 from get_data import get_historical_data
 from binance.client import Client
 import config
-import strategies
 from backtest import BackTest
 import os
 from backtest_parameters import *
@@ -38,7 +37,7 @@ def main():
 
                     # TODO: time each iteration, progress bar of configurations?
 
-                    my_backtest.run_backtest(client=client, window_size=270)
+                    my_backtest.run_backtest(client=client, window_size=30)
 
     # todo: analyze results df to show how the strategy performs
 
