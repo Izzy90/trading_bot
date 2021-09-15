@@ -3,6 +3,9 @@ from typing import Type
 import strategies
 import os
 from backtest_parameters import *
+from utils.misc import TradeList
+import matplotlib.pyplot as plt
+import pandas as pd
 
 
 class BackTest:
@@ -16,7 +19,6 @@ class BackTest:
 
     def run_backtest(self, **kwargs):
         cerebro = bt.Cerebro()
-        # TODO: Alter the timeframe parameter to be dynamic - when interval is in minutes, be minutes, etc.
         data = bt.feeds.GenericCSVData(
             dataname=self.data_file_path,
             openinterest=-1,
@@ -32,20 +34,38 @@ class BackTest:
         cerebro.addobserver(bt.observers.Broker)
         cerebro.addobserver(bt.observers.Trades)
         cerebro.addobserver(bt.observers.BuySell)
-        cerebro.addwriter(bt.WriterFile, out='OUTPUT_FILE_PATH.txt')
-        cerebro.addanalyzer(bt.analyzers.PyFolio, _name='pyfolio.txt')
+        cerebro.addanalyzer(TradeList, _name='trade_list')
+        # cerebro.addwriter(bt.WriterFile, out='OUTPUT_FILE_PATH.txt')
+        # cerebro.addanalyzer(bt.analyzers.PyFolio, _name='pyfolio.txt')
         cerebro.broker.setcommission(commission=trade_commission_percentage)
-        cerebro.run(
+        strat = cerebro.run(
             # Un-comment to disable default observers
-            stdstats=False
+            stdstats=False,
+            tradehistory=True
         )
-        if not os.path.exists(plots_folder_name):
-            os.makedirs(plots_folder_name)
+        curr_plots_folder_name = f"{kwargs['curr_config_folder']}"
+        if not os.path.exists(curr_plots_folder_name):
+            os.makedirs(curr_plots_folder_name)
+
         # TODO - save backtest results (to some pandas df) and return it?
+        # Save trade list.
+        trade_list = strat[0].analyzers.getbyname("trade_list").get_analysis()
+        df = pd.DataFrame(trade_list)
+        # df = df.drop(['pnl/bar', 'ticker'], axis=1)
+        df.to_csv(f"{kwargs['curr_config_folder']}/trades.csv")
+
         strat_name = f'{self.strategy}'.split('.')[1].split("'")[0]
-        cerebro.plot(savefig=True,
-                     path=f'{plots_folder_name}/{kwargs["window_size"] if self.strategy == strategies.SmaCross else ""}_{strat_name}'
-                     )
+        plt.rcParams["figure.figsize"] = (18, 8)
+        if show_plots:
+            cerebro.plot(savefig=True,
+                         path=f"{curr_plots_folder_name}/{kwargs['curr_config_name']}.jpg",
+                         # dpi=400,
+                         # figs=30
+                         )
+        else:
+            plt.savefig(fname=f"{curr_plots_folder_name}/{kwargs['curr_config_name']}.jpg")
+        plt.savefig(fname=f"{plots_folder_name}/{kwargs['curr_config_name']}.jpg")
+        plt.close()
 
 
 if __name__ == '__main__':

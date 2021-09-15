@@ -156,9 +156,9 @@ def on_message(ws, message):
                 print("1")
                 print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Buy!   Buy!   Buy!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 budget.append(0)
-                if WIN[-1]:
-                    winsound.PlaySound("buy.wav", winsound.SND_FILENAME)
-                #                order_succeeded = order(SIDE_BUY, TRADE_QUANTITY, TRADE_SYMBOL)
+                # if WIN[-1]:
+                #     winsound.PlaySound("buy.wav", winsound.SND_FILENAME)
+                # #                order_succeeded = order(SIDE_BUY, TRADE_QUANTITY, TRADE_SYMBOL)
                 # Log file
                 logfile = open(LOG_FILE_NAME, 'a')
                 logfile.write(str(time))
@@ -171,9 +171,9 @@ def on_message(ws, message):
                 print("2")
                 print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Sell!   Sell!   Sell!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 budget.append(1)
-                if WIN[-1]:
-                    winsound.PlaySound("sell.wav", winsound.SND_FILENAME)
-                #               order_succeeded = order(SIDE_SELL, TRADE_QUANTITY, TRADE_SYMBOL)
+                # if WIN[-1]:
+                #     winsound.PlaySound("sell.wav", winsound.SND_FILENAME)
+                # #               order_succeeded = order(SIDE_SELL, TRADE_QUANTITY, TRADE_SYMBOL)
                 # Log file
                 logfile = open(LOG_FILE_NAME, 'w')
                 logfile.writerow(time.strftime("%Y-%m-%d %H:%M:%S"))

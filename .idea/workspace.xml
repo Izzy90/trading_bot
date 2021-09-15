@@ -2,12 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6065cd91-60f4-464a-875d-63d15bd6d3fc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/misc.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OUTPUT_FILE_PATH.txt" beforeDir="false" afterPath="$PROJECT_DIR$/OUTPUT_FILE_PATH.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Botrader.V3.py" beforeDir="false" afterPath="$PROJECT_DIR$/Botrader.V3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OUTPUT_FILE_PATH.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/backtest.py" beforeDir="false" afterPath="$PROJECT_DIR$/backtest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backtest_parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/backtest_parameters.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backtests_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backtests_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buy.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sell.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/strategies.py" beforeDir="false" afterPath="$PROJECT_DIR$/strategies.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,28 +172,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/strategies.py</url>
-          <line>10</line>
+          <line>13</line>
           <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/strategies.py</url>
-          <line>43</line>
-          <option name="timeStamp" value="46" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$USER_HOME$/anaconda3/envs/trading_bot/lib/python3.9/site-packages/backtrader/strategy.py</url>
-          <line>985</line>
-          <option name="timeStamp" value="47" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/backtest.py</url>
-          <line>19</line>
-          <option name="timeStamp" value="48" />
+          <line>59</line>
+          <option name="timeStamp" value="63" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/get_data.py</url>
-          <line>18</line>
-          <option name="timeStamp" value="49" />
+          <url>file://$PROJECT_DIR$/utils/misc.py</url>
+          <line>22</line>
+          <option name="timeStamp" value="75" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -199,8 +196,11 @@
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="cash = {float} 10000.0" language="Python" />
-        <watch expression="self.getposition(data, self.broker).size" />
+        <watch expression="self.broker.getvalue()" language="Python" />
+        <watch expression="self.broker.cash" language="Python" />
+        <watch expression="self.datas[0].close[0]" language="Python" />
+        <watch expression="self.position.price" language="Python" />
+        <watch expression="b" language="Python" />
       </configuration>
     </watches-manager>
   </component>

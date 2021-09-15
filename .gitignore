@@ -3,5 +3,7 @@ logfile*
 *.csv
 data
 plots
+out
 *.wav
 *.png
+*.jpg
