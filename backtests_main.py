@@ -13,9 +13,6 @@ def main():
     # Init client
     client = Client(config.API_KEY, config.API_SECRET)
 
-    # Init results df
-    results_df = pd.DataFrame()
-
     # create data folder
     if not os.path.exists(data_folder_name):
         os.makedirs(data_folder_name)
@@ -58,7 +55,6 @@ def main():
                                                         folder=data_folder_name)
                     # Backtest it
                     my_backtest = BackTest(strategy=strategy, data_file_path=data_filename)
-                    # todo: add results to results df
 
                     my_backtest.run_backtest(client=client, window_size=270, curr_config_folder=curr_config_folder,
                                              curr_config_name=curr_config_name)

@@ -47,8 +47,7 @@ class BackTest:
         if not os.path.exists(curr_plots_folder_name):
             os.makedirs(curr_plots_folder_name)
 
-        # TODO - save backtest results (to some pandas df) and return it?
-        # Save trade list.
+        # Save trade list. TODO: would we want more than just the trades list?
         trade_list = strat[0].analyzers.getbyname("trade_list").get_analysis()
         df = pd.DataFrame(trade_list)
         # df = df.drop(['pnl/bar', 'ticker'], axis=1)
