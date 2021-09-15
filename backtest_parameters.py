@@ -10,7 +10,7 @@ intervals = [
 ]
 periods = [
     # ['1 March 2021', '4 March 2021'],
-    # ['3 March 2021', '13 March 2021'],
+    ['3 March 2021', '17 March 2021'],
     ['1 January 2021', '1 September 2021'],
 
 ]
@@ -25,8 +25,8 @@ data_folder_name = 'data'
 plots_folder_name = 'plots'
 output_folder_name = 'out'
 
-show_progress_bar = False
-show_plots = True
+show_progress_bar = True
+show_plots = False
 
 
 if __name__ == "__main__":

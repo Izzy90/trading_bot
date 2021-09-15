@@ -29,7 +29,7 @@ class SmaCross(bt.Strategy):
         pfast=1,  # period for the fast moving average
         pslow=270,  # period for the slow moving average
         buy_ratio=0.7,  # to avoid trying to buy with more cash than we actually have
-        verbose=True,
+        verbose=False,
         display_name='SMACross'
     )
 
@@ -48,7 +48,7 @@ class SmaCross(bt.Strategy):
                 self.buy(size=amount)  # enter long
 
         elif self.crossover < 0:  # in the market & cross to the downside
-            # TODO: find a way to not sell cheaper than what I bought? (Including commissions)
+            # TODO: find a way to not sell cheaper than what I bought? (Including commissions) - set a limit
             self.close()  # close long position
 
     def notify_trade(self, trade):
@@ -93,6 +93,6 @@ class SmaCross(bt.Strategy):
 # # TODO: Devise a strategy based on the asks and bids realtime data, or incorporate it in another strategy.
 # class SupplyNDemand(bt.strategy):
 
-# # TODO: 1-2% per day strategy, 2x daily stop loss. Find a way to not stoploss too early in the day, something like a
-# # stop-loss that decreases as the day progresses.
+# TODO: 1-2% per day strategy, 2x daily stop loss. Find a way to not stoploss too early in the day, something like a
+#  stop-loss that decreases as the day progresses.
 # class CompoundInterest(bt.strategy):

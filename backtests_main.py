@@ -37,13 +37,15 @@ def main():
                     # Print progress bar
                     if show_progress_bar:
                         print_progress_bar(configuration_number, num_of_configurations)
-                        configuration_number += 1
+                    configuration_number += 1
 
                     # Create the output folder for the current configuration
                     period_start_formatted = datetime.datetime.strptime(period[0], '%d %B %Y').strftime('%d%m%Y')
                     period_end_formatted = datetime.datetime.strptime(period[1], '%d %B %Y').strftime('%d%m%Y')
                     period_formatted = f"{period_start_formatted}-{period_end_formatted}"
                     # TODO: Add the window size for SMA as an optional suffix only for SMACross
+                    # TODO: More generally, I need to find a way to iterate over different parameter groups for
+                    #  different strategies. Dicts perhaps?
                     curr_config_name = f"{interval}_{symbol}_{period_formatted}_{strategy.params.display_name}"
                     curr_config_folder = f"{output_folder_name}/{curr_config_name}"
                     if not os.path.exists(curr_config_folder):
@@ -61,6 +63,8 @@ def main():
 
     # optional todo: analyze results df to show how the strategy performs
 
+    if show_progress_bar:
+        print_progress_bar(configuration_number, num_of_configurations)
     return
 
 
