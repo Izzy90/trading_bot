@@ -1,11 +1,11 @@
 import backtrader as bt
 import talib
 
-'''
-1. TODO: re-format all strategies to handle the buy/sell decisions as meeting a set of conditions. This will help logging
-2. (optional) TODO: Create a my_strategy class, subclass of bt.Strategy and superclass of all other strategies here,
-   in order to mitigate code duplication
-'''
+
+# TODO 1: re-format all strategies to handle the buy/sell decisions as meeting a set of conditions.
+#  This will help logging
+# TODO 2 (optional): Create a my_strategy class, subclass of bt.Strategy and superclass of all other strategies here,
+#   in order to mitigate code duplication and provide a single template for strategies
 
 
 class RSIStrategy(bt.Strategy):
@@ -23,21 +23,20 @@ class RSIStrategy(bt.Strategy):
 
 class SmaCross(bt.Strategy):
     # list of parameters which are configurable for the strategy
-    # TODO: enable dynamic value for pslow MA window size as a parameter
     params = dict(
         pcurr_price=1,  # period for the fast moving average
         pfast=1,  # period for the fast moving average
-        pslow=270,  # period for the slow moving average
+        # pslow=270,  # period for the slow moving average
         buy_ratio=0.7,  # to avoid trying to buy with more cash than we actually have
         verbose=False,
-        display_name='SMACross'
     )
+    display_name = 'SmaCross'
 
-    def __init__(self, window_size, client):
+    def __init__(self, **kwargs):
         self.curr_price = bt.ind.SMA(period=self.p.pcurr_price)  # fast moving average
         self.order = None,
         self.sma1 = bt.ind.SMA(period=self.p.pfast)  # fast moving average
-        self.sma2 = bt.ind.SMA(period=self.p.pslow)  # slow moving average
+        self.sma2 = bt.ind.SMA(period=kwargs['window_sizes'])  # slow moving average
         self.crossover = bt.ind.CrossOver(self.sma1, self.sma2)  # crossover signal
 
     def next(self):
