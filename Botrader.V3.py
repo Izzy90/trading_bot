@@ -124,7 +124,6 @@ def on_message(ws, message):
         prices.append(float(close))
         np_prices = numpy.array(prices)
         ma = talib.MA(np_prices, MA)
-        ma = talib.MA(np_prices, MA)
 
         last_price = prices[-1]
         # check if can last_2_price is relevant

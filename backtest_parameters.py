@@ -19,11 +19,11 @@ periods = [
     ['1 February 2020', '1 October 2020'],
     ['1 March 2020', '1 November 2020'],
     ['1 April 2020', '1 December 2020'],
-
 ]
 strategies_list = [
                     strategies.SmaCross,
-                    # strategies.RSIStrategy   # this one is buggy
+                    # strategies.RSIStrategy,   # this one is buggy
+                    # strategies.BuyAndHold
                    ]
 additional_params = {
     'SmaCross':
@@ -31,12 +31,16 @@ additional_params = {
             'window_sizes': [i for i in range(30, 360, 30)],
             # 'test_param': [2,3,4]
         },
-    'RSIStrategy':
-        {}
+    'RSIStrategy': {
+        'dummy': [0]
+    },
+    'BuyNHold': {
+        'dummy': [0]
+    }
 }
 
 # Configurations
-trade_commission_percentage = 0.1
+trade_commission_percentage = 0.001 # this is not formatted as a percentage (commissions = 1 corresponds to 100% commision)
 data_folder_name = 'data'
 plots_folder_name = 'plots'
 output_folder_name = 'out'

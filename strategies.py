@@ -8,17 +8,17 @@ import talib
 #   in order to mitigate code duplication and provide a single template for strategies
 
 
-class RSIStrategy(bt.Strategy):
-
-    def __init__(self):
-        self.rsi = talib.RSI(self.data, timeperiod=14)
-
-    # size = amount of coin to buy (etc. BTC)
-    def next(self):
-        if self.rsi < 30 and not self.position:
-            self.buy(size=54)
-        if self.rsi > 70 and self.position:
-            self.close()
+# class RSIStrategy(bt.Strategy):
+#
+#     def __init__(self):
+#         self.rsi = talib.RSI(self.data, timeperiod=14)
+#
+#     # size = amount of coin to buy (etc. BTC)
+#     def next(self):
+#         if self.rsi < 30 and not self.position:
+#             self.buy(size=54)
+#         if self.rsi > 70 and self.position:
+#             self.close()
 
 
 class SmaCross(bt.Strategy):
@@ -86,8 +86,23 @@ class SmaCross(bt.Strategy):
 # # TODO - Exponential MA
 # class EmaCross(bt.Strategy):
 
-# # TODO - Buy and Hold: Baseline Strategy
-# class BuyAndHold(bt.Strategy):
+# TODO - Buy and Hold: Baseline Strategy
+class BuyAndHold(bt.Strategy):
+    # list of parameters which are configurable for the strategy
+    params = dict(
+        pcurr_price=1,  # period for the fast moving average
+        pfast=1,  # period for the fast moving average
+        # pslow=270,  # period for the slow moving average
+        buy_ratio=0.7,  # to avoid trying to buy with more cash than we actually have
+        verbose=False,
+    )
+    display_name = 'BuyNHold'
+
+    def next(self):
+        # just buy
+        if not self.position:  # not in the market
+            amount = self.broker.cash / self.datas[0].close[0] * self.p.buy_ratio
+            self.buy(size=amount)  # enter long
 
 # # TODO: Devise a strategy based on the asks and bids realtime data, or incorporate it in another strategy.
 # class SupplyNDemand(bt.strategy):
