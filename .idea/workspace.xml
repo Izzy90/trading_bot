@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6065cd91-60f4-464a-875d-63d15bd6d3fc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backtest_parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/backtest_parameters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backtests_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backtests_main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/strategies.py" beforeDir="false" afterPath="$PROJECT_DIR$/strategies.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -158,12 +155,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/strategies.py</url>
-          <line>25</line>
+          <line>28</line>
           <option name="timeStamp" value="99" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/strategies.py</url>
-          <line>28</line>
+          <line>31</line>
           <option name="timeStamp" value="100" />
         </line-breakpoint>
       </breakpoints>

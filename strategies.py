@@ -4,9 +4,12 @@ import numpy as np
 
 
 # TODO 1: re-format all strategies to handle the buy/sell decisions as meeting a set of conditions.
-#  This will help logging
+#  This will help logging. Optional: frame the decision as a decision tree, to enable more scenarios more complex than
+#  simple 'and' on all conditions.
 # TODO 2 (optional): Create a my_strategy class, subclass of bt.Strategy and superclass of all other strategies here,
 #   in order to mitigate code duplication and provide a single template for strategies
+# TODO 3: Enable strategies to support jumping between pairs, rather than just looking at a single pair
+# TODO 4: Enable strategies to support multiple time-periods for more complex calculations
 
 
 class RSIStrategy(bt.Strategy):
