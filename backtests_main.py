@@ -38,9 +38,15 @@ def main():
         for interval in intervals:
             for period in periods:
                 for strategy in strategies_list:
-                    keys, values = zip(*additional_params[strategy.display_name].items())
-                    experiments = [dict(zip(keys, v)) for v in product(*values)]
+                    if len(additional_params[strategy.display_name]) > 0:
+                        keys, values = zip(*additional_params[strategy.display_name].items())
+                        experiments = [dict(zip(keys, v)) for v in product(*values)]
+                    else:
+                        experiments = [{'dummy': 0}]
                     for params in experiments:
+                        # get rid of dummy params
+                        if 'dummy' in params.keys():
+                            params = {}
 
                         # Print progress bar
                         if show_progress_bar:

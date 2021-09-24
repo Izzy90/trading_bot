@@ -1,5 +1,6 @@
 import backtrader as bt
 import talib
+import numpy as np
 
 
 # TODO 1: re-format all strategies to handle the buy/sell decisions as meeting a set of conditions.
@@ -8,17 +9,24 @@ import talib
 #   in order to mitigate code duplication and provide a single template for strategies
 
 
-# class RSIStrategy(bt.Strategy):
-#
-#     def __init__(self):
-#         self.rsi = talib.RSI(self.data, timeperiod=14)
-#
-#     # size = amount of coin to buy (etc. BTC)
-#     def next(self):
-#         if self.rsi < 30 and not self.position:
-#             self.buy(size=54)
-#         if self.rsi > 70 and self.position:
-#             self.close()
+class RSIStrategy(bt.Strategy):
+    # list of parameters which are configurable for the strategy
+    params = dict(
+        buy_ratio=0.7,  # to avoid trying to buy with more cash than we actually have
+        verbose=False,
+    )
+    display_name = 'RSIStrategy'
+
+    def __init__(self):
+        self.rsi = bt.indicators.RSI_SMA(self.data)
+
+    # size = amount of coin to buy (etc. BTC)
+    def next(self):
+        if self.rsi < 30 and not self.position:
+            amount = self.broker.cash / self.datas[0].close[0] * self.p.buy_ratio
+            self.buy(size=amount)  # enter long
+        if self.rsi > 70 and self.position:
+            self.close()
 
 
 class SmaCross(bt.Strategy):
