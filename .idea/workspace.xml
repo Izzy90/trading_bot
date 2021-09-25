@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6065cd91-60f4-464a-875d-63d15bd6d3fc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/strategies.py" beforeDir="false" afterPath="$PROJECT_DIR$/strategies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +18,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/anaconda3/envs/trading_bot/lib/python3.9/site-packages/backtrader/strategy.py" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1xEhp0mfafOM4D2Q72839Xl2Ck3" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
