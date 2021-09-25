@@ -18,7 +18,7 @@ class BackTest:
         self.strategy_specific_params = strategy_specific_params
 
     def run_backtest(self, **kwargs):
-        cerebro = bt.Cerebro()
+        cerebro = bt.Cerebro(cheat_on_open=True)
         data = bt.feeds.GenericCSVData(
             dataname=self.data_file_path,
             openinterest=-1,
@@ -42,7 +42,8 @@ class BackTest:
         if not os.path.exists(curr_plots_folder_name):
             os.makedirs(curr_plots_folder_name)
 
-        # Save trade list. TODO: would we want more than just the trades list? Missed trades?
+        # TODO: would we want more than just the trades list? Missed opportunities? Also, add cash to trades log
+        # Save trade list
         trade_list = strat[0].analyzers.getbyname("trade_list").get_analysis()
         df = pd.DataFrame(trade_list)
         df.to_csv(f"{kwargs['curr_config_folder']}/trades.csv")
