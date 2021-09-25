@@ -17,24 +17,23 @@ class TradeList(bt.Analyzer):
 
         if trade.isclosed:
 
-            brokervalue = self.strategy.broker.getvalue()
+            broker_value = self.strategy.broker.getvalue()
 
-            dir = 'short'
-            if trade.history[0].event.size > 0: dir = 'long'
+            direction = 'long' if trade.history[0].event.size > 0 else 'short'
 
-            pricein = trade.history[len(trade.history)-1].status.price
-            priceout = trade.history[len(trade.history)-1].event.price
-            datein = bt.num2date(trade.history[0].status.dt)
-            dateout = bt.num2date(trade.history[len(trade.history)-1].status.dt)
+            price_in = trade.history[len(trade.history) - 1].status.price
+            price_out = trade.history[len(trade.history) - 1].event.price
+            date_in = bt.num2date(trade.history[0].status.dt)
+            date_out = bt.num2date(trade.history[len(trade.history) - 1].status.dt)
             if trade.data._timeframe >= bt.TimeFrame.Days:
-                datein = datein.date()
-                dateout = dateout.date()
+                date_in = date_in.date()
+                date_out = date_out.date()
 
-            pcntchange = 100 * priceout / pricein - 100
-            pnl = trade.history[len(trade.history)-1].status.pnlcomm
-            pnlpcnt = 100 * pnl / brokervalue
-            barlen = trade.history[len(trade.history)-1].status.barlen
-            pbar = pnl / barlen
+            percent_change = 100 * price_out / price_in - 100
+            pnl = trade.history[len(trade.history) - 1].status.pnlcomm
+            pnl_percent = 100 * pnl / broker_value
+            bar_length = trade.history[len(trade.history) - 1].status.barlen
+            p_bar = pnl / bar_length
             self.cumprofit += pnl
 
             size = value = 0.0
@@ -43,26 +42,26 @@ class TradeList(bt.Analyzer):
                     size = record.status.size
                     value = record.status.value
 
-            highest_in_trade = max(trade.data.high.get(ago=0, size=barlen+1))
-            lowest_in_trade = min(trade.data.low.get(ago=0, size=barlen+1))
-            hp = 100 * (highest_in_trade - pricein) / pricein
-            lp = 100 * (lowest_in_trade - pricein) / pricein
-            if dir == 'long':
-                mfe = hp
-                mae = lp
-            if dir == 'short':
+            highest_in_trade = max(trade.data.high.get(ago=0, size=bar_length + 1))
+            lowest_in_trade = min(trade.data.low.get(ago=0, size=bar_length + 1))
+            hp = 100 * (highest_in_trade - price_in) / price_in
+            lp = 100 * (lowest_in_trade - price_in) / price_in
+            if direction == 'short':
                 mfe = -lp
                 mae = -hp
+            else:
+                mfe = hp
+                mae = lp
 
-            self.trades.append({'ref': trade.ref, 'ticker': trade.data._name, 'dir': dir,
-                 'datein': datein, 'pricein': pricein, 'dateout': dateout, 'priceout': priceout,
-                 'chng%': round(pcntchange, 2), 'pnl': pnl, 'pnl%': round(pnlpcnt, 2),
-                 'size': size, 'value': value, 'cumpnl': self.cumprofit,
-                 'nbars': barlen, 'pnl/bar': round(pbar, 2),
-                 'mfe%': round(mfe, 2), 'mae%': round(mae, 2)})
+            self.trades.append({'ref': trade.ref, 'ticker': trade.data._name, 'dir': direction,
+                                'datein': date_in, 'pricein': price_in, 'dateout': date_out, 'priceout': price_out,
+                                'chng%': round(percent_change, 2), 'pnl': pnl, 'pnl%': round(pnl_percent, 2),
+                                'size': size, 'value': value, 'cumpnl': self.cumprofit,
+                                'nbars': bar_length, 'pnl/bar': round(p_bar, 2),
+                                'mfe%': round(mfe, 2), 'mae%': round(mae, 2)})
 
 
-def print_progress_bar (iteration, total, prefix ='', suffix ='', decimals = 1, length = 100, fill ='█'):
+def print_progress_bar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█'):
     """
     Call in a loop to create terminal progress bar
     @params:
@@ -75,8 +74,8 @@ def print_progress_bar (iteration, total, prefix ='', suffix ='', decimals = 1, 
         fill        - Optional  : bar fill character (Str)
     """
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-    filledLength = int(length * iteration // total)
-    bar = fill * filledLength + '-' * (length - filledLength)
+    filled_length = int(length * iteration // total)
+    bar = fill * filled_length + '-' * (length - filled_length)
     print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end='')
     sys.stdout.flush()
     # Print New Line on Complete
@@ -87,8 +86,7 @@ def print_progress_bar (iteration, total, prefix ='', suffix ='', decimals = 1, 
 # def convert_value_to_coins(value, price):
 
 def save_plots(cerebro, numfigs=1, iplot=True, start=None, end=None,
-              width=16, height=9, dpi=300, tight=True, use=None, file_path='', **kwargs):
-
+               use=None, file_path='', **kwargs):
     from backtrader import plot
     if cerebro.p.oldsync:
         plotter = plot.Plot_OldSync(**kwargs)
