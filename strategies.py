@@ -82,6 +82,7 @@ class BuyAndHold(bt.Strategy):
     # list of parameters which are configurable for the strategy
     params = dict(
         verbose=False,
+        buy_ratio=0.7,  # to avoid trying to buy with more cash than we actually have
     )
     display_name = 'BuyNHold'
 
